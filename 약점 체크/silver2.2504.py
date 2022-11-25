@@ -1,5 +1,4 @@
 '''
-import sys 
 line = list(input())
 
 x = 1
@@ -7,61 +6,49 @@ y = 1
 
 answer = 0
 bracket = []
-started = True
-error = False
 
-for i in line:
+for h in range(len(line)):
+    i = line[h]
     if i == '(':
         bracket.append('x')
-        started = True
         x *= 2
     elif i == ')':
-        if bracket[-1] == 'x':
-            bracket.pop()
-        else:
-            error = True
-            
-        if started:
+        if len(bracket) == 0 or bracket[-1] != 'x':
+            answer = 0
+            break
+        elif line[h-1] == '(':
             answer += x * y
-            started = False
+            
+        bracket.pop()
         x //= 2
     elif i == '[':
         bracket.append('y')
-        started = True
         y *= 3
     elif i == ']':
-        if bracket[-1] == 'y':
-            bracket.pop()
-        else:
-            error = True
-        if started:
+        if len(bracket) == 0 or bracket[-1] != 'y':
+            answer = 0
+            break
+        elif line[h-1] == '[':
             answer += x * y
-            started = False
+        
+        bracket.pop()
         y //= 3
         
-if error:
-    print(0)
-else:
-    print(answer)
+if bracket:
+    answer = 0
+print(answer)
 '''
 
+I =input()
 
+I = I.replace('()','(1)')
+I = I.replace('[]','[1]')
 
-def solve(l):
-	if len(l) == 0 : return 1
-	dic = {'(':')', '[':']'}
-	val, sub, stk = 0, '', []
-	
-	for i in l:
-		sub += i
-		if len(stk) > 0 and dic.get(stk[-1], '') == i : stk.pop()
-		else : stk.append(i)
-		
-		if len(stk) == 0:
-			val += solve(sub[1:-1]) * (2 if sub[0] == '(' else 3)
-			sub = ''
-			
-	if len(stk) > 0 : return 0
-	return val
-
-print(solve(input()))
+r=''
+try:
+    for i in I:
+        r += {'(':'+2*(', '[':'+3*[', ')':')', ']':'][0]', '1':'1'}[i]
+        print(r)
+    print(eval(r))
+except:
+    print(0)
