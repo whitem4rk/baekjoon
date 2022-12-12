@@ -1,18 +1,40 @@
-import sys
+# combination
+'''
 from itertools import combinations
 
-n = int(sys.stdin.readline())
+n = int(input())
+nums = list() 
 
-nums = list()               # 모든 감소하는 수
-for i in range(1, 11):      #  1~10개의 조합 만들기 (0~9개니깐)
-    for comb in combinations(range(0, 10), i):  # 0~9로 하나씩 조합 만들기
+for i in range(1, 11):     
+    for comb in combinations(range(0, 10), i):
         comb = list(comb)
-        comb.sort(reverse=True)                     # 해당 조합을 감소하는 수로 변경
+        comb.sort(reverse=True)                    
         nums.append(int("".join(map(str, comb))))
 
-nums.sort()   # 오름차순
+nums.sort()  
 
 try:
     print(nums[n])
-except:     # 인덱스가 넘어가는 경우 -1 출력. 마지막 수 9876543210
+except:    
+    print(-1)
+'''
+
+# recursive
+n = int(input())
+ans = []
+
+def decrease(x):
+    ans.append(x)
+    left = int(str(x)[0])
+    for i in range(left+1, 10):
+        decrease(int(str(i) + str(x)))
+
+for i in range(10):
+    decrease(i)
+    
+ans.sort()
+
+try :
+    print(ans[n])
+except : 
     print(-1)
