@@ -1,35 +1,34 @@
-from collections import deque
+width, height = map(int, input().split())
+graph = [list(input()) for _ in range(height)]
+visited = [[False] * width for _ in range(height)]
 
-m,n = map(int, input().split())
-graph = [list(input().strip()) for _ in range(n)]
-w,b=0,0
+dx = [0, 0, 1, -1]
+dy = [1, -1, 0, 0]
 
-dx = [-1,1,0,0]
-dy = [0,0,-1,1]
+w_power = 0
+b_power = 0
 
-def bfs(x,y,team):
-    queue = deque()
-    queue.append((x,y))
-    count = 0
-    graph[x][y] == 0
-    while queue:
-        x, y = queue.popleft()
-        for i in range(4):
-            nx = x+dx[i]
-            ny = y+dy[i]
-            if nx<0 or ny<0 or nx>=n or ny>=m:
-                continue
-            if graph[nx][ny] != 0 and graph[nx][ny] == team:
-                queue.append((nx,ny))
-                graph[nx][ny] = 0
-                count += 1
-    return (1 if count==0 else count)
+def dfs(y,x,flag):
+    global count
+    visited[y][x] = True
+    count += 1
+    for i in range(4):
+        if y+dy[i] < height and 0 <= y+dy[i] and x+dx[i] < width and 0 <= x+dx[i]:
+            if not visited[y+dy[i]][x+dx[i]] and graph[y+dy[i]][x+dx[i]] == flag:
+                dfs(y+dy[i],x+dx[i],flag)
 
-for i in range(n):
-    for j in range(m):
-        if graph[i][j] != 0:
-            if graph[i][j] == 'W':
-                w += bfs(i,j,graph[i][j])**2
-            else:
-                b += bfs(i,j,graph[i][j])**2
-print(w,b)
+for i in range(height):
+    for j in range(width):
+        if visited[i][j]:
+            continue
+        
+        if graph[i][j] == 'W':
+            count = 0
+            dfs(i,j,'W')
+            w_power += count ** 2
+        else:
+            count = 0
+            dfs(i,j,'B')
+            b_power += count ** 2
+            
+print(w_power, b_power)
