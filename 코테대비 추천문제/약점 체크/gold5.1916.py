@@ -19,7 +19,7 @@ def dijk(first, last):
     distance[first] = 0
     
     while queue:
-        cur, cur_dist = heapq.heappop(queue)
+        cur, cur_dist = heapq.heappop(que   ue)
         if distance[cur] < cur_dist:
             continue
         for end, dist in citylist[cur]:

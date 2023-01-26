@@ -6,7 +6,7 @@ del string_list[0]
 
 for s in string_list:
     s = s.replace(",", '').replace(";", '')
-
+''''''''''''''''''''''''''''''''
     print(basic_type, end='')
 
     for i in range(len(s) - 1, 0, -1):
@@ -14,7 +14,7 @@ for s in string_list:
             if s[i] == ']':
                 print('[', end='')
             elif s[i] == '[':
-                print(']', end='')
+                print(']', end='')''''''''''''''''''''''''''''''''
             else:
                 print(s[i], end='')
 
